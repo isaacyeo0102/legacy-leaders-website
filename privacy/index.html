@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Legacy Leaders</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --cream: #F7F3EC; --cream-deep: #EDE6D8;
+      --gold: #B8975A; --gold-pale: #E8D5B0;
+      --charcoal: #1A1814; --charcoal-mid: #2C2820;
+      --warm-grey: #6B6459; --text-light: #9A9089;
+    }
+    body { background: var(--cream); color: var(--charcoal); font-family: 'Jost', sans-serif; font-weight: 300; cursor: none; }
+    .cursor { position: fixed; width: 8px; height: 8px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); }
+    .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid var(--gold); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94); opacity: 0.6; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 4rem; background: rgba(247,243,236,0.97); border-bottom: 1px solid var(--cream-deep); }
+    .nav-logo { display: flex; align-items: center; gap: 0.9rem; text-decoration: none; }
+    
+    .nav-logo-wordmark { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--charcoal); }
+    .nav-logo-wordmark span { color: var(--gold); }
+    .nav-back { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--warm-grey); text-decoration: none; transition: color 0.3s; }
+    .nav-back:hover { color: var(--gold); }
+
+    .page-wrap { max-width: 780px; margin: 0 auto; padding: 10rem 2rem 8rem; }
+    .privacy-eyebrow { font-size: 0.58rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gold); margin-bottom: 1.5rem; }
+    .privacy-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 4vw, 4rem); font-weight: 300; line-height: 1.1; color: var(--charcoal); margin-bottom: 1rem; }
+    .privacy-updated { font-size: 0.65rem; letter-spacing: 0.12em; color: var(--text-light); margin-bottom: 4rem; padding-bottom: 3rem; border-bottom: 1px solid var(--cream-deep); }
+
+    .privacy-section { margin-bottom: 3.5rem; }
+    .privacy-section-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 400; color: var(--charcoal); margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--gold-pale); }
+    .privacy-body { font-size: 0.82rem; line-height: 2; color: var(--warm-grey); }
+    .privacy-body p + p { margin-top: 1rem; }
+    .privacy-body strong { font-weight: 400; color: var(--charcoal); }
+    .privacy-body ul { padding-left: 1.5rem; margin: 1rem 0; }
+    .privacy-body li { margin-bottom: 0.5rem; }
+    .privacy-body a { color: var(--gold); text-decoration: none; }
+    .privacy-body a:hover { text-decoration: underline; }
+
+    .privacy-contact { margin-top: 4rem; padding: 2.5rem 3rem; background: var(--charcoal); }
+    .privacy-contact-title { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-style: italic; color: var(--cream); margin-bottom: 1rem; }
+    .privacy-contact-body { font-size: 0.78rem; line-height: 1.9; color: rgba(247,243,236,0.5); }
+    .privacy-contact-body a { color: var(--gold); text-decoration: none; }
+
+    footer { background: var(--charcoal); padding: 3.5rem 7rem; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(184,151,90,0.15); }
+    .nav-logo-img { height: 48px; width: auto; flex-shrink: 0; display: block; }
+    .footer-logo { display: flex; align-items: center; gap: 0.85rem; text-decoration: none; }
+    .footer-logo-img { height: 44px; width: auto; filter: brightness(0) invert(1); opacity: 0.9; }
+    .footer-logo-wordmark { font-family: 'Cormorant Garamond', serif; font-size: 0.95rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--cream); }
+    .footer-logo-wordmark span { color: var(--gold); }
+    .footer-links { display: flex; gap: 2.5rem; list-style: none; }
+    .footer-links a { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(247,243,236,0.3); text-decoration: none; transition: color 0.3s; }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-copy { font-size: 0.6rem; letter-spacing: 0.1em; color: rgba(247,243,236,0.2); }
+  </style>
+</head>
+<body>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <nav>
+    <a href="/" class="nav-logo">
+      <img src="../assets/images/logo.png" alt="Legacy Leaders" class="nav-logo-img" />
+      <span class="nav-logo-wordmark">Legacy <span>Leaders</span></span>
+    </a>
+    <a href="/" class="nav-back">← Return to site</a>
+  </nav>
+
+  <div class="page-wrap">
+    <p class="privacy-eyebrow">Legal</p>
+    <h1 class="privacy-title">Privacy Policy</h1>
+    <p class="privacy-updated">Last updated: 1 February 2025</p>
+
+    <div class="privacy-section">
+      <h2 class="privacy-section-title">1. Introduction</h2>
+      <div class="privacy-body">
+        <p>Legacy Leaders ("we", "our", or "us") is committed to protecting your personal data. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you engage with our website and services.</p>
+        <p>We operate in accordance with the <strong>Personal Data Protection Act 2012 (Singapore)</strong> and applicable subsidiary legislation. By using our website or contacting us, you agree to the practices described in this policy.</p>
+        <p>Our services are directed exclusively at accredited investors as defined under the Securities and Futures Act (Cap. 289) and the Financial Advisers Act (Cap. 110). We do not knowingly collect personal data from individuals who do not meet this criterion.</p>
+      </div>
+    </div>
+
+    <div class="privacy-section">
+      <h2 class="privacy-section-title">2. Information We Collect</h2>
+      <div class="privacy-body">
+        <p>We may collect the following categories of personal data:</p>
+        <ul>
+          <li><strong>Identity data:</strong> Full name, date of birth, NRIC or passport number, and similar identifying information provided in the course of an engagement.</li>
+          <li><strong>Contact data:</strong> Email address, telephone number, and residential or business address.</li>
+          <li><strong>Financial data:</strong> Information about your assets, liabilities, income, and estate structure, provided for the purpose of estate planning advice.</li>
+          <li><strong>Enquiry data:</strong> Information submitted through our contact form, estate assessment tool, or direct correspondence.</li>
+          <li><strong>Technical data:</strong> IP address, browser type, and pages visited, collected automatically through standard web analytics tools.</li>
+        </ul>
+        <p>Our estate assessment tool processes your responses locally in your browser. <strong>No assessment data is transmitted to or stored on our servers.</strong></p>
+      </div>
+    </div>
+
+    <div class="privacy-section">
+      <h2 class="privacy-section-title">3. How We Use Your Information</h2>
+      <div class="privacy-body">
+        <p>We use your personal data for the following purposes:</p>
+        <ul>
+          <li>To respond to your enquiries and schedule consultations.</li>
+          <li>To provide estate planning, legal, and financial advisory services.</li>
+          <li>To prepare, draft, and review legal documents and financial plans on your behalf.</li>
+          <li>To communicate with you regarding your engagement, including updates and follow-up matters.</li>
+          <li>To comply with applicable legal and regulatory obligations, including those imposed by the Singapore Law Society and the Monetary Authority of Singapore.</li>
+          <li>To send periodic insights or updates, where you have consented to receive such communications.</li>
+        </ul>
+        <p>We do not use your personal data for automated profiling, marketing to third parties, or any purpose inconsistent with those stated above.</p>
+      </div>
+    </div>
+
+    <div class="privacy-section">
+      <h2 class="privacy-section-title">4. Confidentiality and Professional Privilege</h2>
+      <div class="privacy-body">
+        <p>Information disclosed in the context of legal advisory services is protected by <strong>legal professional privilege</strong> to the extent applicable under Singapore law. Such information is held in strict confidence and will not be disclosed without your consent, except where required by law or court order.</p>
+        <p>All staff and third-party service providers engaged by Legacy Leaders are bound by confidentiality obligations consistent with the sensitivity of the information we handle.</p>
+      </div>
+    </div>
+
+    <div class="privacy-section">
+      <h2 class="privacy-section-title">5. Disclosure of Personal Data</h2>
+      <div class="privacy-body">
+        <p>We do not sell, rent, or trade your personal data. We may disclose your data to third parties only in the following circumstances:</p>
+        <ul>
+          <li><strong>With your consent:</strong> Where you have expressly authorised disclosure to specific parties (e.g., co-advisers, financial institutions, government bodies).</li>
+          <li><strong>Legal or regulatory requirement:</strong> Where disclosure is required by law, court order, or regulatory authority, including the Singapore Law Society, MAS, or the Office of the Public Guardian.</li>
+          <li><strong>Service providers:</strong> Trusted third parties who provide essential operational services (e.g., secure document management) and who are contractually bound to protect your data.</li>
+        </ul>
+        <p>We do not disclose your data to insurance companies, financial product distributors, or any party that could use it for commercial solicitation without your explicit prior consent.</p>
+      </div>
+    </div>
+
+    <div class="privacy-section">
+      <h2 class="privacy-section-title">6. Data Retention</h2>
+      <div class="privacy-body">
+        <p>We retain your personal data for as long as necessary to fulfil the purposes for which it was collected, including to satisfy legal, accounting, and professional regulatory obligations.</p>
+        <p>For legal engagements, records are typically retained for a minimum of <strong>seven (7) years</strong> following the conclusion of the engagement, consistent with professional standards. After this period, data is securely deleted or anonymised.</p>
+      </div>
+    </div>
+
+    <div class="privacy-section">
+      <h2 class="privacy-section-title">7. Security</h2>
+      <div class="privacy-body">
+        <p>We implement appropriate technical and organisational measures to protect your personal data against unauthorised access, loss, destruction, or alteration. All data in transit is encrypted using industry-standard TLS protocols. Client documents are stored in access-controlled, encrypted environments.</p>
+        <p>Whilst we take all reasonable precautions, no transmission over the internet is entirely secure. If you have specific concerns about data security, please contact us to discuss alternative communication arrangements.</p>
+      </div>
+    </div>
+
+    <div class="privacy-section">
+      <h2 class="privacy-section-title">8. Your Rights</h2>
+      <div class="privacy-body">
+        <p>Under the PDPA, you have the right to:</p>
+        <ul>
+          <li><strong>Access</strong> your personal data held by us.</li>
+          <li><strong>Correct</strong> any inaccuracies in your personal data.</li>
+          <li><strong>Withdraw consent</strong> to certain uses of your personal data, subject to legal and contractual limitations.</li>
+          <li><strong>Request deletion</strong> of your personal data, subject to our legal retention obligations.</li>
+        </ul>
+        <p>To exercise any of these rights, please contact us using the details below. We will respond to all requests within 30 days.</p>
+      </div>
+    </div>
+
+    <div class="privacy-section">
+      <h2 class="privacy-section-title">9. Cookies and Analytics</h2>
+      <div class="privacy-body">
+        <p>Our website uses minimal analytics to understand how visitors interact with our content. No third-party advertising cookies are used. You may disable cookies in your browser settings; this will not affect your ability to use our website or contact us.</p>
+      </div>
+    </div>
+
+    <div class="privacy-section">
+      <h2 class="privacy-section-title">10. Changes to This Policy</h2>
+      <div class="privacy-body">
+        <p>We may update this Privacy Policy from time to time. The date of the most recent revision is displayed at the top of this page. Continued use of our website or services following an update constitutes acceptance of the revised policy.</p>
+      </div>
+    </div>
+
+    <div class="privacy-contact">
+      <h3 class="privacy-contact-title">Questions about your privacy?</h3>
+      <p class="privacy-contact-body">
+        If you have any questions, concerns, or requests regarding this Privacy Policy or the handling of your personal data, please contact us at <a href="mailto:privacy@legacyleaders.sg">privacy@legacyleaders.sg</a> or through our <a href="/#contact">contact form</a>. We take all privacy matters seriously and will respond promptly.
+      </p>
+    </div>
+  </div>
+
+  <footer>
+    <a href="/" class="footer-logo">
+      <img src="../assets/images/logo.png" alt="Legacy Leaders" class="footer-logo-img" />
+      <span class="footer-logo-wordmark">Legacy <span>Leaders</span></span>
+    </a>
+    <ul class="footer-links">
+      <li><a href="/#services">Services</a></li>
+      <li><a href="/insights">Insights</a></li>
+      <li><a href="/privacy">Privacy</a></li>
+      <li><a href="/#contact">Contact</a></li>
+    </ul>
+    <span class="footer-copy">© 2025 Legacy Leaders. All rights reserved.</span>
+  </footer>
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    const cursorRing = document.getElementById('cursorRing');
+    let mx=0,my=0,rx=0,ry=0;
+    document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
+    (function a(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;cursorRing.style.left=rx+'px';cursorRing.style.top=ry+'px';requestAnimationFrame(a);})();
+  </script>
+</body>
+</html>

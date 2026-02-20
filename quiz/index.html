@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Estate Assessment — Legacy Leaders</title>
+  <meta name="description" content="Discover what your estate actually needs. Answer 12 questions and receive a personalised estate planning assessment." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@200;300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --cream: #F7F3EC;
+      --cream-deep: #EDE6D8;
+      --gold: #B8975A;
+      --gold-light: #D4B07A;
+      --gold-pale: #E8D5B0;
+      --charcoal: #1A1814;
+      --charcoal-mid: #2C2820;
+      --warm-grey: #6B6459;
+      --text-light: #9A9089;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--cream);
+      color: var(--charcoal);
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+      cursor: none;
+      min-height: 100vh;
+    }
+
+    /* Cursor */
+    .cursor { position: fixed; width: 8px; height: 8px; background: var(--gold); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%,-50%); transition: width 0.3s ease, height 0.3s ease; }
+    .cursor-ring { position: fixed; width: 36px; height: 36px; border: 1px solid var(--gold); border-radius: 50%; pointer-events: none; z-index: 9998; transform: translate(-50%,-50%); transition: transform 0.35s cubic-bezier(0.25,0.46,0.45,0.94), width 0.3s, height 0.3s, opacity 0.3s; opacity: 0.6; }
+
+    /* Nav */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.5rem 4rem;
+      background: rgba(247,243,236,0.97);
+      border-bottom: 1px solid var(--cream-deep);
+    }
+    .nav-logo { display: flex; align-items: center; gap: 0.9rem; text-decoration: none; }
+    
+    .nav-logo-wordmark { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; color: var(--charcoal); }
+    .nav-logo-wordmark span { color: var(--gold); }
+    .nav-back { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--warm-grey); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; transition: color 0.3s; }
+    .nav-back:hover { color: var(--gold); }
+    .nav-back::before { content: '←'; transition: transform 0.3s; }
+    .nav-back:hover::before { transform: translateX(-4px); }
+
+    /* Progress bar */
+    .progress-wrap {
+      position: fixed; top: 73px; left: 0; right: 0; z-index: 99;
+      height: 2px; background: var(--cream-deep);
+    }
+    .progress-fill {
+      height: 100%; background: var(--gold);
+      width: 0%; transition: width 0.5s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+
+    /* Main layout */
+    .quiz-page {
+      min-height: 100vh;
+      padding-top: 75px;
+    }
+
+    /* ─── START SCREEN ─── */
+    .start-screen {
+      min-height: calc(100vh - 75px);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+    }
+    .start-left {
+      padding: 7rem 5rem 7rem 7rem;
+      display: flex; flex-direction: column; justify-content: center;
+      border-right: 1px solid var(--cream-deep);
+    }
+    .start-eyebrow {
+      font-size: 0.6rem; letter-spacing: 0.35em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 2rem;
+    }
+    .start-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 4vw, 4.5rem);
+      font-weight: 300; line-height: 1.1;
+      color: var(--charcoal); margin-bottom: 2rem;
+    }
+    .start-title em { font-style: italic; color: var(--gold); }
+    .start-body {
+      font-size: 0.85rem; line-height: 1.95;
+      color: var(--warm-grey); max-width: 420px; margin-bottom: 3.5rem;
+    }
+    .start-btn {
+      display: inline-block; padding: 1.1rem 3rem;
+      background: var(--charcoal); color: var(--cream);
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+      text-decoration: none; border: none; cursor: none;
+      position: relative; overflow: hidden; transition: color 0.4s;
+      width: fit-content;
+    }
+    .start-btn::before {
+      content: ''; position: absolute; inset: 0;
+      background: var(--gold); transform: scaleX(0);
+      transform-origin: left; transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .start-btn:hover::before { transform: scaleX(1); }
+    .start-btn span { position: relative; z-index: 1; }
+    .start-right {
+      padding: 7rem 7rem 7rem 5rem;
+      display: flex; flex-direction: column; justify-content: center; gap: 3rem;
+      background: var(--charcoal);
+    }
+    .start-feature {
+      border-left: 1px solid rgba(184,151,90,0.3);
+      padding-left: 2rem;
+    }
+    .start-feature-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem; font-weight: 300;
+      color: var(--gold-light); line-height: 1; margin-bottom: 0.4rem;
+    }
+    .start-feature-label {
+      font-size: 0.7rem; letter-spacing: 0.12em;
+      color: rgba(247,243,236,0.5);
+    }
+    .start-disclaimer {
+      margin-top: 1rem;
+      padding: 1.5rem;
+      border: 1px solid rgba(184,151,90,0.2);
+    }
+    .start-disclaimer-text {
+      font-size: 0.68rem; line-height: 1.8;
+      color: rgba(247,243,236,0.3);
+    }
+
+    /* ─── QUESTION SCREEN ─── */
+    .question-screen {
+      min-height: calc(100vh - 75px);
+      display: none;
+      flex-direction: column;
+    }
+    .question-screen.active { display: flex; }
+
+    .question-meta {
+      padding: 2.5rem 7rem;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid var(--cream-deep);
+    }
+    .question-section-label {
+      font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold);
+    }
+    .question-counter {
+      font-size: 0.6rem; letter-spacing: 0.2em;
+      color: var(--text-light);
+    }
+    .question-counter strong { color: var(--charcoal); }
+
+    .question-body {
+      flex: 1;
+      padding: 5rem 7rem;
+      display: flex; flex-direction: column;
+    }
+    .question-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      font-weight: 300; line-height: 1.25;
+      color: var(--charcoal); margin-bottom: 0.75rem;
+      max-width: 700px;
+    }
+    .question-instruction {
+      font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 3rem;
+    }
+
+    /* Options grid */
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      max-width: 800px;
+    }
+    .options-grid.options-3 { grid-template-columns: repeat(3, 1fr); }
+    .options-grid.options-5 { grid-template-columns: repeat(2, 1fr); }
+
+    .option-card {
+      padding: 1.5rem 1.75rem;
+      border: 1px solid var(--cream-deep);
+      cursor: none;
+      transition: all 0.25s ease;
+      position: relative;
+      user-select: none;
+    }
+    .option-card:hover {
+      border-color: var(--gold-pale);
+      background: rgba(184,151,90,0.04);
+    }
+    .option-card.selected {
+      border-color: var(--gold);
+      background: rgba(184,151,90,0.06);
+    }
+    .option-card.selected::after {
+      content: '';
+      position: absolute; top: 1rem; right: 1rem;
+      width: 6px; height: 6px;
+      background: var(--gold); border-radius: 50%;
+    }
+    .option-text {
+      font-size: 0.82rem; line-height: 1.6;
+      color: var(--charcoal);
+    }
+    .option-card.selected .option-text { color: var(--charcoal); }
+
+    /* Multi-select check style */
+    .option-card.multi .option-text {
+      padding-left: 1.5rem;
+      position: relative;
+    }
+    .option-card.multi .option-text::before {
+      content: '';
+      position: absolute; left: 0; top: 50%;
+      transform: translateY(-50%);
+      width: 12px; height: 12px;
+      border: 1px solid var(--text-light);
+      transition: all 0.2s;
+    }
+    .option-card.multi.selected .option-text::before {
+      background: var(--gold); border-color: var(--gold);
+    }
+    .option-card.multi.selected::after { display: none; }
+
+    /* Navigation */
+    .question-nav {
+      padding: 2.5rem 7rem;
+      display: flex; align-items: center; gap: 2rem;
+      border-top: 1px solid var(--cream-deep);
+    }
+    .btn-back {
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-light); background: none; border: none;
+      cursor: none; transition: color 0.3s; padding: 0;
+      display: flex; align-items: center; gap: 0.5rem;
+    }
+    .btn-back::before { content: '←'; transition: transform 0.3s; }
+    .btn-back:hover { color: var(--warm-grey); }
+    .btn-back:hover::before { transform: translateX(-3px); }
+    .btn-back:disabled { opacity: 0.3; pointer-events: none; }
+
+    .btn-continue {
+      padding: 0.9rem 2.5rem;
+      background: var(--charcoal); color: var(--cream);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+      border: none; cursor: none;
+      position: relative; overflow: hidden; transition: color 0.4s;
+      opacity: 0.35; pointer-events: none;
+    }
+    .btn-continue::before {
+      content: ''; position: absolute; inset: 0;
+      background: var(--gold); transform: scaleX(0);
+      transform-origin: left; transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+    .btn-continue:hover::before { transform: scaleX(1); }
+    .btn-continue span { position: relative; z-index: 1; }
+    .btn-continue.enabled { opacity: 1; pointer-events: auto; }
+
+    /* ─── CALCULATING SCREEN ─── */
+    .calculating-screen {
+      display: none;
+      min-height: calc(100vh - 75px);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 4rem;
+    }
+    .calculating-screen.active { display: flex; }
+    .calc-spinner {
+      width: 60px; height: 60px;
+      border: 1px solid var(--cream-deep);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 1.2s linear infinite;
+      margin-bottom: 3rem;
+    }
+    .calc-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2rem; font-weight: 300;
+      color: var(--charcoal); margin-bottom: 1rem;
+    }
+    .calc-sub {
+      font-size: 0.75rem; letter-spacing: 0.1em;
+      color: var(--text-light);
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ─── RESULT SCREEN ─── */
+    .result-screen {
+      display: none;
+    }
+    .result-screen.active { display: block; }
+
+    .result-hero {
+      padding: 6rem 7rem;
+      background: var(--charcoal);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+    .result-badge-wrap {}
+    .result-tier-label {
+      font-size: 0.58rem; letter-spacing: 0.4em; text-transform: uppercase;
+      color: rgba(184,151,90,0.6); margin-bottom: 1.5rem;
+    }
+    .result-tier-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 5vw, 5rem);
+      font-weight: 300; line-height: 1.05;
+      color: var(--cream); margin-bottom: 1rem;
+    }
+    .result-tier-name em { font-style: italic; color: var(--gold); }
+    .result-tier-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem; font-style: italic;
+      color: rgba(247,243,236,0.5);
+    }
+    .result-summary-label {
+      font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1.5rem;
+    }
+    .result-summary-text {
+      font-size: 0.85rem; line-height: 2;
+      color: rgba(247,243,236,0.55);
+    }
+    .result-summary-text strong { font-weight: 400; color: var(--cream); }
+
+    /* Recommendations */
+    .result-recs {
+      padding: 6rem 7rem;
+      background: var(--cream);
+    }
+    .result-recs-label {
+      font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1rem;
+    }
+    .result-recs-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 3vw, 3rem);
+      font-weight: 300; line-height: 1.2;
+      color: var(--charcoal); margin-bottom: 4rem;
+    }
+    .recs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--cream-deep);
+      margin-bottom: 1px;
+    }
+    .rec-card {
+      background: var(--cream);
+      padding: 2.5rem 2rem;
+      position: relative;
+    }
+    .rec-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px; background: var(--gold);
+    }
+    .rec-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 3rem; font-weight: 300;
+      color: rgba(184,151,90,0.15); line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .rec-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem; font-weight: 400;
+      color: var(--charcoal); margin-bottom: 0.75rem; line-height: 1.3;
+    }
+    .rec-desc {
+      font-size: 0.75rem; line-height: 1.85;
+      color: var(--warm-grey); margin-bottom: 1.25rem;
+    }
+    .rec-tag {
+      display: inline-block; font-size: 0.55rem; letter-spacing: 0.18em;
+      text-transform: uppercase; color: var(--gold);
+      border: 1px solid var(--gold-pale); padding: 0.35rem 0.7rem;
+    }
+
+    /* Gaps section */
+    .result-gaps {
+      padding: 5rem 7rem;
+      background: var(--cream-deep);
+    }
+    .gaps-label {
+      font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 1rem;
+    }
+    .gaps-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.8rem, 2.5vw, 2.5rem);
+      font-weight: 300; color: var(--charcoal); margin-bottom: 3rem;
+    }
+    .gaps-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem; max-width: 800px;
+    }
+    .gap-item {
+      display: flex; align-items: flex-start; gap: 1rem;
+      padding: 1.25rem 1.5rem;
+      background: var(--cream);
+      border-left: 2px solid var(--gold);
+    }
+    .gap-icon { color: var(--gold); font-size: 0.9rem; flex-shrink: 0; margin-top: 0.1rem; }
+    .gap-text { font-size: 0.78rem; line-height: 1.7; color: var(--warm-grey); }
+    .gap-text strong { font-weight: 400; color: var(--charcoal); display: block; margin-bottom: 0.2rem; }
+
+    /* CTA */
+    .result-cta {
+      padding: 8rem 7rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      background: var(--charcoal);
+    }
+    .result-cta-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 4vw, 4rem);
+      font-weight: 300; line-height: 1.15;
+      color: var(--cream);
+    }
+    .result-cta-title em { font-style: italic; color: var(--gold); }
+    .result-cta-text {
+      font-size: 0.82rem; line-height: 1.9;
+      color: rgba(247,243,236,0.5); margin-bottom: 3rem;
+    }
+    .result-cta-form { display: flex; flex-direction: column; gap: 1rem; }
+    .result-input {
+      background: transparent; border: none;
+      border-bottom: 1px solid rgba(184,151,90,0.2);
+      padding: 1rem 0;
+      font-family: 'Jost', sans-serif; font-size: 0.8rem; font-weight: 300;
+      color: var(--cream); letter-spacing: 0.05em;
+      outline: none; transition: border-color 0.3s;
+    }
+    .result-input::placeholder { color: rgba(247,243,236,0.25); }
+    .result-input:focus { border-color: var(--gold); }
+    .result-submit {
+      margin-top: 0.5rem; padding: 1rem 2.5rem;
+      background: var(--gold); color: var(--charcoal);
+      font-family: 'Jost', sans-serif; font-size: 0.65rem;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      border: none; cursor: none; align-self: flex-start;
+      transition: background 0.3s, color 0.3s;
+    }
+    .result-submit:hover { background: var(--cream); }
+    .result-restart {
+      margin-top: 3rem;
+      font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(247,243,236,0.25); background: none; border: none;
+      cursor: none; transition: color 0.3s;
+    }
+    .result-restart:hover { color: var(--gold); }
+
+    /* Footer */
+    .quiz-footer {
+      background: var(--charcoal); padding: 2.5rem 7rem;
+      display: flex; justify-content: space-between; align-items: center;
+      border-top: 1px solid rgba(184,151,90,0.1);
+    }
+    .quiz-footer a { display: flex; align-items: center; gap: 0.7rem; text-decoration: none; }
+    .nav-logo-img { height: 48px; width: auto; flex-shrink: 0; display: block; }
+    .quiz-footer-logo-img { height: 44px; width: auto; filter: brightness(0) invert(1); opacity: 0.9; }
+    .quiz-footer-wordmark { font-family: 'Cormorant Garamond', serif; font-size: 0.85rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(247,243,236,0.5); }
+    .quiz-footer-wordmark span { color: var(--gold); }
+    .quiz-footer-copy { font-size: 0.55rem; letter-spacing: 0.1em; color: rgba(247,243,236,0.15); }
+
+    /* Transitions */
+    .screen-enter { animation: screenIn 0.45s cubic-bezier(0.76, 0, 0.24, 1) forwards; }
+    @keyframes screenIn { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  </style>
+</head>
+<body>
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Nav -->
+  <nav>
+    <a href="/" class="nav-logo">
+      <img src="../assets/images/logo.png" alt="Legacy Leaders" class="nav-logo-img" />
+      <span class="nav-logo-wordmark">Legacy <span>Leaders</span></span>
+    </a>
+    <a href="/" class="nav-back">Return to site</a>
+  </nav>
+
+  <!-- Progress bar -->
+  <div class="progress-wrap">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <main class="quiz-page" id="quizPage">
+
+    <!-- START SCREEN -->
+    <div class="start-screen" id="startScreen">
+      <div class="start-left">
+        <p class="start-eyebrow">Estate Assessment · Under 5 Minutes</p>
+        <h1 class="start-title">
+          Discover what your<br>estate <em>actually</em><br>needs.
+        </h1>
+        <p class="start-body">
+          Most high-net-worth individuals are unknowingly exposed. Answer 12 questions about your family, assets, and current arrangements — and receive a personalised assessment identifying exactly where you stand and what you need.
+        </p>
+        <button class="start-btn" id="startBtn" onclick="startQuiz()">
+          <span>Begin Assessment →</span>
+        </button>
+      </div>
+      <div class="start-right">
+        <div class="start-feature">
+          <div class="start-feature-num">12</div>
+          <div class="start-feature-label">Carefully considered questions</div>
+        </div>
+        <div class="start-feature">
+          <div class="start-feature-num">&lt;5</div>
+          <div class="start-feature-label">Minutes to complete</div>
+        </div>
+        <div class="start-feature">
+          <div class="start-feature-num">100%</div>
+          <div class="start-feature-label">Private — no data stored</div>
+        </div>
+        <div class="start-disclaimer">
+          <p class="start-disclaimer-text">
+            This assessment is designed to give you a high-level indication of your estate planning needs. It does not constitute legal or financial advice. Your responses are processed locally and are not stored or transmitted.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- QUESTION SCREENS (generated by JS) -->
+    <div class="question-screen" id="questionScreen">
+      <div class="question-meta">
+        <span class="question-section-label" id="sectionLabel"></span>
+        <span class="question-counter">Question <strong id="qCurrent">1</strong> of 12</span>
+      </div>
+      <div class="question-body">
+        <h2 class="question-text" id="questionText"></h2>
+        <p class="question-instruction" id="questionInstruction"></p>
+        <div class="options-grid" id="optionsGrid"></div>
+      </div>
+      <div class="question-nav">
+        <button class="btn-back" id="backBtn" onclick="prevQuestion()"><span>Back</span></button>
+        <button class="btn-continue" id="continueBtn" onclick="nextQuestion()"><span>Continue →</span></button>
+      </div>
+    </div>
+
+    <!-- CALCULATING -->
+    <div class="calculating-screen" id="calculatingScreen">
+      <div class="calc-spinner"></div>
+      <h2 class="calc-title">Analysing your estate profile…</h2>
+      <p class="calc-sub">Cross-referencing your responses against estate planning requirements</p>
+    </div>
+
+    <!-- RESULT SCREEN -->
+    <div class="result-screen" id="resultScreen">
+      <!-- Populated by JS -->
+    </div>
+
+  </main>
+
+  <script>
+  // ─────────────────────────────────────────────
+  // QUESTION DATA
+  // ─────────────────────────────────────────────
+  const QUESTIONS = [
+    {
+      id: 1,
+      section: 'Your Family',
+      text: 'What best describes your current family situation?',
+      type: 'single',
+      options: [
+        { text: 'Single, no dependants', value: 'single', score: 0 },
+        { text: 'Married or partnered, no children yet', value: 'married_no_children', score: 0 },
+        { text: 'Married with children or planning a family', value: 'married_children', score: 1, flags: ['family'] },
+        { text: 'Divorced or widowed with dependants', value: 'divorced_dependants', score: 2, flags: ['family', 'complex_family'] }
+      ]
+    },
+    {
+      id: 2,
+      section: 'Your Family',
+      text: 'How many people are financially dependent on you?',
+      type: 'single',
+      options: [
+        { text: 'None', value: 'none', score: 0 },
+        { text: '1–2 dependants', value: '1_2', score: 1 },
+        { text: '3–5 dependants', value: '3_5', score: 2, flags: ['many_dependants'] },
+        { text: 'More than 5', value: '5_plus', score: 3, flags: ['many_dependants'] }
+      ]
+    },
+    {
+      id: 3,
+      section: 'Your Family',
+      text: 'Do any of your dependants require special or long-term financial provision?',
+      type: 'single',
+      options: [
+        { text: 'Yes — minor children under 21', value: 'minor_children', score: 2, flags: ['trust_needed', 'minors'] },
+        { text: 'Yes — elderly parents or relatives', value: 'elderly', score: 2, flags: ['trust_needed'] },
+        { text: 'Yes — a dependant with disability or special needs', value: 'special_needs', score: 3, flags: ['trust_needed', 'special_needs'] },
+        { text: 'No special circumstances', value: 'no', score: 0 }
+      ]
+    },
+    {
+      id: 4,
+      section: 'Your Assets',
+      text: 'Which age range are you in?',
+      type: 'single',
+      options: [
+        { text: '30–40', value: '30_40', score: 1 },
+        { text: '41–50', value: '41_50', score: 1 },
+        { text: '51–60', value: '51_60', score: 2 },
+        { text: '61 and above', value: '61_plus', score: 2, flags: ['lpa_urgent'] }
+      ]
+    },
+    {
+      id: 5,
+      section: 'Your Assets',
+      text: 'What is the approximate net value of your estate — including property, investments, CPF, business interests, and insurance?',
+      type: 'single',
+      options: [
+        { text: 'S$1M – S$3M', value: '1_3m', score: 1 },
+        { text: 'S$3M – S$10M', value: '3_10m', score: 2, flags: ['significant_estate'] },
+        { text: 'S$10M – S$30M', value: '10_30m', score: 3, flags: ['significant_estate', 'complex'] },
+        { text: 'Above S$30M', value: '30m_plus', score: 4, flags: ['significant_estate', 'complex', 'ultra_hnw'] }
+      ]
+    },
+    {
+      id: 6,
+      section: 'Your Assets',
+      text: 'What property do you currently own?',
+      type: 'single',
+      options: [
+        { text: 'My primary residence in Singapore only', value: 'primary_sg', score: 1 },
+        { text: 'Multiple properties in Singapore', value: 'multi_sg', score: 2 },
+        { text: 'Properties in Singapore and overseas', value: 'sg_overseas', score: 3, flags: ['crossborder'] },
+        { text: 'I rent — no property ownership', value: 'none', score: 0 }
+      ]
+    },
+    {
+      id: 7,
+      section: 'Your Assets',
+      text: 'Do you own or hold a significant interest in a business?',
+      type: 'single',
+      options: [
+        { text: 'Yes — I am the sole owner or majority shareholder', value: 'sole_owner', score: 3, flags: ['business'] },
+        { text: 'Yes — I have business partners or co-shareholders', value: 'partners', score: 4, flags: ['business', 'business_complex'] },
+        { text: 'No — I am not a business owner', value: 'no', score: 0 }
+      ]
+    },
+    {
+      id: 8,
+      section: 'Current Arrangements',
+      text: 'Do you currently have a professionally drafted will?',
+      type: 'single',
+      options: [
+        { text: 'Yes — recently reviewed and updated', value: 'yes_current', score: 0 },
+        { text: 'Yes — but it may be outdated or incomplete', value: 'yes_outdated', score: 2, flags: ['will_gap'] },
+        { text: 'I have one but I\'m uncertain of its current status', value: 'unsure', score: 2, flags: ['will_gap'] },
+        { text: 'No — I do not have a will', value: 'no', score: 3, flags: ['will_gap', 'no_will'] }
+      ]
+    },
+    {
+      id: 9,
+      section: 'Current Arrangements',
+      text: 'Which of the following instruments do you currently have in place?',
+      type: 'multi',
+      instruction: 'Select all that apply',
+      options: [
+        { text: 'Lasting Power of Attorney (LPA)', value: 'lpa', flags: ['has_lpa'] },
+        { text: 'CPF nominations (beneficiary designations)', value: 'cpf', flags: ['has_cpf'] },
+        { text: 'Insurance trust nominations (Section 73 or trust assignment)', value: 'ins_trust', flags: ['has_ins_trust'] },
+        { text: 'A testamentary or living trust structure', value: 'trust', flags: ['has_trust'] },
+        { text: 'None of the above', value: 'none_above', exclusive: true }
+      ]
+    },
+    {
+      id: 10,
+      section: 'Current Arrangements',
+      text: 'How are your primary life insurance policies currently nominated?',
+      type: 'single',
+      options: [
+        { text: 'Nominated to my estate (revocable / default)', value: 'estate', score: 2, flags: ['insurance_gap'] },
+        { text: 'Named beneficiary — Section 73 nomination', value: 'sec73', score: 0 },
+        { text: 'Assigned to a trust structure', value: 'trust', score: 0 },
+        { text: 'I\'m not sure how my policies are nominated', value: 'unsure', score: 2, flags: ['insurance_gap'] },
+        { text: 'I have minimal or no life insurance', value: 'minimal', score: 3, flags: ['insurance_gap', 'no_insurance'] }
+      ]
+    },
+    {
+      id: 11,
+      section: 'Current Arrangements',
+      text: 'Do you have significant assets or family members located outside Singapore?',
+      type: 'single',
+      options: [
+        { text: 'Yes — assets abroad (property, accounts, investments)', value: 'assets_abroad', score: 2, flags: ['crossborder'] },
+        { text: 'Yes — beneficiaries who are foreign nationals or overseas residents', value: 'beneficiaries_abroad', score: 2, flags: ['crossborder'] },
+        { text: 'Both — assets and family members abroad', value: 'both_abroad', score: 3, flags: ['crossborder', 'crossborder_complex'] },
+        { text: 'No — everything and everyone is Singapore-based', value: 'no', score: 0 }
+      ]
+    },
+    {
+      id: 12,
+      section: 'Your Priorities',
+      text: 'What is your most important estate planning priority right now?',
+      type: 'single',
+      options: [
+        { text: 'Family protection — financial security if I pass unexpectedly', value: 'family', score: 0 },
+        { text: 'Incapacity planning — LPA and healthcare directions', value: 'incapacity', score: 0 },
+        { text: 'Business continuity — protecting and transferring my enterprise', value: 'business', score: 0, flags: ['business'] },
+        { text: 'Multi-generational wealth — efficient transfer with minimal probate', value: 'wealth', score: 0, flags: ['complex'] },
+        { text: 'I need a full picture — I\'m not sure where to begin', value: 'unsure', score: 1 }
+      ]
+    }
+  ];
+
+  // ─────────────────────────────────────────────
+  // STATE
+  // ─────────────────────────────────────────────
+  let currentQ = 0;
+  const answers = {}; // {qIndex: value or [values]}
+
+  // ─────────────────────────────────────────────
+  // CURSOR
+  // ─────────────────────────────────────────────
+  const cursor = document.getElementById('cursor');
+  const cursorRing = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; cursor.style.left = mx+'px'; cursor.style.top = my+'px'; });
+  (function animRing(){ rx += (mx-rx)*0.12; ry += (my-ry)*0.12; cursorRing.style.left = rx+'px'; cursorRing.style.top = ry+'px'; requestAnimationFrame(animRing); })();
+  document.addEventListener('mouseover', e => { if(e.target.closest('a,button,.option-card')){ cursor.style.width='14px'; cursor.style.height='14px'; cursorRing.style.width='52px'; cursorRing.style.height='52px'; } else { cursor.style.width='8px'; cursor.style.height='8px'; cursorRing.style.width='36px'; cursorRing.style.height='36px'; } });
+
+  // ─────────────────────────────────────────────
+  // NAVIGATION
+  // ─────────────────────────────────────────────
+  function startQuiz() {
+    document.getElementById('startScreen').style.display = 'none';
+    showQuestion(0);
+  }
+
+  function showQuestion(index) {
+    currentQ = index;
+    const q = QUESTIONS[index];
+    const qs = document.getElementById('questionScreen');
+    qs.className = 'question-screen active screen-enter';
+
+    // Meta
+    document.getElementById('sectionLabel').textContent = q.section;
+    document.getElementById('qCurrent').textContent = index + 1;
+
+    // Progress
+    document.getElementById('progressFill').style.width = ((index / 12) * 100) + '%';
+
+    // Text
+    document.getElementById('questionText').textContent = q.text;
+    const instrEl = document.getElementById('questionInstruction');
+    instrEl.textContent = q.instruction || '';
+    instrEl.style.display = q.instruction ? 'block' : 'none';
+
+    // Options
+    const grid = document.getElementById('optionsGrid');
+    grid.innerHTML = '';
+    const count = q.options.length;
+    grid.className = 'options-grid' + (count === 3 ? ' options-3' : count === 5 ? ' options-5' : '');
+
+    q.options.forEach((opt, i) => {
+      const card = document.createElement('div');
+      card.className = 'option-card' + (q.type === 'multi' ? ' multi' : '');
+      card.innerHTML = `<span class="option-text">${opt.text}</span>`;
+
+      // Restore saved answer
+      const saved = answers[index];
+      if (q.type === 'single' && saved === opt.value) card.classList.add('selected');
+      if (q.type === 'multi' && Array.isArray(saved) && saved.includes(opt.value)) card.classList.add('selected');
+
+      card.addEventListener('click', () => selectOption(card, opt, q, grid));
+      grid.appendChild(card);
+    });
+
+    // Back button
+    const backBtn = document.getElementById('backBtn');
+    backBtn.disabled = index === 0;
+
+    // Continue button
+    updateContinueBtn();
+
+    // Remove animation class after
+    setTimeout(() => qs.classList.remove('screen-enter'), 450);
+  }
+
+  function selectOption(card, opt, q, grid) {
+    if (q.type === 'single') {
+      grid.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      answers[currentQ] = opt.value;
+    } else {
+      // Multi-select
+      if (opt.exclusive) {
+        // "None of the above" — deselect everything else
+        grid.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+        card.classList.add('selected');
+        answers[currentQ] = [opt.value];
+      } else {
+        // Deselect "none of the above" if it was selected
+        const cards = Array.from(grid.querySelectorAll('.option-card'));
+        const noneCard = cards[cards.length - 1];
+        if (noneCard.classList.contains('selected') && q.options[q.options.length-1].exclusive) {
+          noneCard.classList.remove('selected');
+        }
+        card.classList.toggle('selected');
+        // Collect selected
+        const selected = [];
+        cards.forEach((c, i) => { if (c.classList.contains('selected')) selected.push(q.options[i].value); });
+        answers[currentQ] = selected.length ? selected : undefined;
+      }
+    }
+    updateContinueBtn();
+  }
+
+  function updateContinueBtn() {
+    const btn = document.getElementById('continueBtn');
+    const hasAnswer = answers[currentQ] !== undefined &&
+      (Array.isArray(answers[currentQ]) ? answers[currentQ].length > 0 : true);
+    btn.classList.toggle('enabled', hasAnswer);
+  }
+
+  function nextQuestion() {
+    if (currentQ < QUESTIONS.length - 1) {
+      showQuestion(currentQ + 1);
+    } else {
+      // Last question answered — show calculating
+      showCalculating();
+    }
+  }
+
+  function prevQuestion() {
+    if (currentQ > 0) showQuestion(currentQ - 1);
+  }
+
+  function showCalculating() {
+    document.getElementById('questionScreen').classList.remove('active');
+    document.getElementById('progressFill').style.width = '100%';
+    const calc = document.getElementById('calculatingScreen');
+    calc.classList.add('active', 'screen-enter');
+    setTimeout(() => { calc.classList.remove('screen-enter'); }, 450);
+    setTimeout(() => {
+      calc.classList.remove('active');
+      showResult();
+    }, 2800);
+  }
+
+  // ─────────────────────────────────────────────
+  // SCORING & RESULT
+  // ─────────────────────────────────────────────
+  function computeProfile() {
+    let score = 0;
+    const flags = new Set();
+
+    QUESTIONS.forEach((q, i) => {
+      const ans = answers[i];
+      if (!ans) return;
+
+      if (q.type === 'single') {
+        const opt = q.options.find(o => o.value === ans);
+        if (opt) {
+          score += opt.score || 0;
+          (opt.flags || []).forEach(f => flags.add(f));
+        }
+      } else if (q.type === 'multi') {
+        const vals = Array.isArray(ans) ? ans : [ans];
+        vals.forEach(v => {
+          const opt = q.options.find(o => o.value === v);
+          if (opt) (opt.flags || []).forEach(f => flags.add(f));
+        });
+        // Gaps: each missing instrument
+        const missing = ['lpa','cpf','ins_trust','trust'].filter(x => !vals.includes(x));
+        score += missing.length;
+        if (!flags.has('has_lpa')) flags.add('needs_lpa');
+        if (!flags.has('has_cpf')) flags.add('needs_cpf');
+        if (!flags.has('has_ins_trust')) flags.add('needs_ins_trust');
+      }
+    });
+
+    // Determine tier
+    let tier, tierName, tierSub;
+    if (score <= 7) {
+      tier = 'foundational';
+      tierName = 'Foundational';
+      tierSub = 'Estate Profile';
+    } else if (score <= 14) {
+      tier = 'structured';
+      tierName = 'Structured';
+      tierSub = 'Estate Profile';
+    } else {
+      tier = 'comprehensive';
+      tierName = 'Comprehensive';
+      tierSub = 'Estate Profile';
+    }
+
+    return { score, flags, tier, tierName, tierSub };
+  }
+
+  function getSummary(tier, flags) {
+    if (tier === 'foundational') {
+      return `Your estate profile indicates a need for <strong>core foundational instruments</strong> — the essential layer of protection that every individual should have in place. Whilst your situation may not yet involve significant complexity, the absence of even basic instruments creates real legal and financial exposure for those who depend on you.`;
+    } else if (tier === 'structured') {
+      return `Your estate has <strong>multiple dimensions that require coordinated planning</strong>. A standard will is unlikely to be sufficient. The interaction between your assets, dependants, and existing arrangements creates specific gaps that need to be addressed with the right instruments, structured in the right order.`;
+    } else {
+      return `Your estate involves <strong>significant complexity requiring a comprehensive, multi-instrument plan</strong>. The scale, structure, and cross-cutting nature of your assets and obligations means that a piecemeal approach will leave meaningful gaps. You require a fully coordinated estate ecosystem — built by someone who understands both the legal and financial dimensions.`;
+    }
+  }
+
+  function getRecommendations(tier, flags) {
+    const recs = [];
+
+    // Will — always recommend if gap or no will
+    if (flags.has('will_gap') || flags.has('no_will') || tier !== 'foundational') {
+      recs.push({
+        name: 'Professionally Drafted Will',
+        desc: flags.has('no_will')
+          ? 'You currently have no will in place. Without one, your estate will be distributed under Singapore\'s Intestate Succession Act — which may not reflect your wishes and could create significant delays and disputes.'
+          : 'Your existing will may be outdated or incomplete. A will that does not account for your current asset profile, family structure, or changed circumstances can be as problematic as having none.',
+        tag: 'Foundational'
+      });
+    }
+
+    // LPA
+    if (flags.has('needs_lpa') || flags.has('lpa_urgent')) {
+      recs.push({
+        name: 'Lasting Power of Attorney',
+        desc: 'An LPA authorises trusted individuals to make decisions on your behalf if you lose mental capacity — whether through illness, accident, or age. Without one, your family would need to apply to the court under the Mental Capacity Act, a process that is costly, time-consuming, and uncertain.',
+        tag: 'Incapacity Planning'
+      });
+    }
+
+    // Trust
+    if (flags.has('trust_needed') || flags.has('minors') || flags.has('special_needs') || tier === 'structured' || tier === 'comprehensive') {
+      recs.push({
+        name: 'Testamentary Trust',
+        desc: flags.has('special_needs')
+          ? 'A dependant with special needs requires structured long-term provision — a trust with specific protective provisions, trustee discretion, and government benefit preservation considerations.'
+          : flags.has('minors')
+          ? 'Minor children cannot hold assets outright. A testamentary trust within your will allows you to set conditions for distribution — by age, milestone, or trustee discretion — ensuring funds are preserved and applied appropriately.'
+          : 'A testamentary trust provides structured, protected distribution of your estate to your chosen beneficiaries — with conditions, timing, and trustee oversight built in.',
+        tag: 'Trust Structuring'
+      });
+    }
+
+    // Insurance
+    if (flags.has('insurance_gap') || flags.has('no_insurance') || tier !== 'foundational') {
+      recs.push({
+        name: flags.has('no_insurance') ? 'Life Insurance Review & Structuring' : 'Insurance Nomination Review',
+        desc: flags.has('no_insurance')
+          ? 'Your estate currently has limited or no life insurance provision. For a high-net-worth individual, life insurance serves multiple functions: immediate liquidity on death, equalising inheritances, and funding estate expenses. An independent review will identify the right coverage and structure.'
+          : flags.has('insurance_gap')
+          ? 'Your policies appear to be nominated to your estate or incorrectly structured. This means proceeds will be subject to probate, potentially delayed for months or years. A Section 73 CLPA nomination or trust assignment allows funds to pass directly to your chosen beneficiaries, outside of probate.'
+          : 'Ensuring your insurance policies are optimally nominated is a critical but often overlooked element of estate planning. We will review your current nominations and restructure where necessary.',
+        tag: 'Insurance Planning'
+      });
+    }
+
+    // Business succession
+    if (flags.has('business')) {
+      recs.push({
+        name: 'Business Succession Framework',
+        desc: flags.has('business_complex')
+          ? 'With business partners and co-shareholders, your succession plan must address buy-sell arrangements, shareholder agreements, and the continuity of the business itself — as well as ensuring your stake passes efficiently to your intended beneficiaries.'
+          : 'As a business owner, your succession plan must address the continuity of your enterprise, the treatment of your shareholding in your will, and the interaction between business and personal assets. Without this, your estate and your business may both be exposed.',
+        tag: 'Business Succession'
+      });
+    }
+
+    // Cross-border
+    if (flags.has('crossborder')) {
+      recs.push({
+        name: 'Cross-Border Estate Planning',
+        desc: flags.has('crossborder_complex')
+          ? 'With both overseas assets and international beneficiaries, your estate planning must consider multiple legal systems, potential forced heirship rules, tax implications, and the practical mechanics of cross-border asset transfer. This requires specialist coordination.'
+          : 'Overseas assets — whether property, accounts, or investments — are not automatically governed by a Singapore will. You may need jurisdiction-specific documentation, and your plan must account for the interaction between different legal systems.',
+        tag: 'International Planning'
+      });
+    }
+
+    // CPF
+    if (flags.has('needs_cpf')) {
+      recs.push({
+        name: 'CPF Nominations',
+        desc: 'CPF savings do not form part of your estate and cannot be distributed via your will. Without a CPF nomination, your funds are distributed to next-of-kin under the Intestate Succession Act — which may not align with your wishes. A nomination takes 15 minutes and is one of the highest-value estate planning actions you can take.',
+        tag: 'CPF Planning'
+      });
+    }
+
+    return recs.slice(0, 6);
+  }
+
+  function getGaps(flags, answers_obj) {
+    const gaps = [];
+
+    if (flags.has('no_will')) gaps.push({ title: 'No Will in Place', desc: 'Your estate will be distributed under intestacy rules, which may not reflect your wishes.' });
+    else if (flags.has('will_gap')) gaps.push({ title: 'Will May Be Outdated', desc: 'An incomplete or outdated will can be as problematic as no will at all.' });
+
+    if (flags.has('needs_lpa')) gaps.push({ title: 'No Lasting Power of Attorney', desc: 'Without an LPA, your family would need costly court proceedings if you lose capacity.' });
+
+    if (flags.has('insurance_gap')) gaps.push({ title: 'Insurance Not Optimally Nominated', desc: 'Policies nominated to your estate are subject to probate, delaying access for your family.' });
+
+    if (flags.has('no_insurance')) gaps.push({ title: 'Limited Life Insurance Coverage', desc: 'Your estate lacks the liquidity protection that life insurance provides on death.' });
+
+    if (flags.has('needs_cpf')) gaps.push({ title: 'No CPF Nomination', desc: 'Without a nomination, CPF funds are distributed under intestacy rules, not your will.' });
+
+    if (flags.has('business') && !flags.has('has_trust')) gaps.push({ title: 'No Business Succession Plan', desc: 'Your business interest has no documented succession framework — a critical exposure.' });
+
+    if (flags.has('crossborder')) gaps.push({ title: 'Cross-Border Assets Not Addressed', desc: 'Overseas assets require jurisdiction-specific planning that a Singapore will alone cannot cover.' });
+
+    return gaps.slice(0, 6);
+  }
+
+  function showResult() {
+    const { score, flags, tier, tierName, tierSub } = computeProfile();
+    const summary = getSummary(tier, flags);
+    const recs = getRecommendations(tier, flags);
+    const gaps = getGaps(flags, answers);
+
+    const recsHTML = recs.map((r, i) => `
+      <div class="rec-card">
+        <div class="rec-num">0${i+1}</div>
+        <h3 class="rec-name">${r.name}</h3>
+        <p class="rec-desc">${r.desc}</p>
+        <span class="rec-tag">${r.tag}</span>
+      </div>
+    `).join('');
+
+    const gapsHTML = gaps.map(g => `
+      <div class="gap-item">
+        <span class="gap-icon">◆</span>
+        <div class="gap-text"><strong>${g.title}</strong>${g.desc}</div>
+      </div>
+    `).join('');
+
+    const recsGridClass = recs.length <= 4 ? 'recs-grid' : 'recs-grid';
+
+    document.getElementById('resultScreen').innerHTML = `
+      <div class="result-hero">
+        <div class="result-badge-wrap">
+          <p class="result-tier-label">Your Estate Assessment Result</p>
+          <h2 class="result-tier-name"><em>${tierName}</em><br>${tierSub}</h2>
+          <p class="result-tier-sub">Based on your responses</p>
+        </div>
+        <div>
+          <p class="result-summary-label">Assessment Summary</p>
+          <p class="result-summary-text">${summary}</p>
+        </div>
+      </div>
+
+      <div class="result-recs">
+        <p class="result-recs-label">Recommended Instruments</p>
+        <h3 class="result-recs-title">What your estate profile<br>requires.</h3>
+        <div class="${recsGridClass}">${recsHTML}</div>
+      </div>
+
+      ${gaps.length > 0 ? `
+      <div class="result-gaps">
+        <p class="gaps-label">Identified Gaps</p>
+        <h3 class="gaps-title">Areas requiring<br>immediate attention.</h3>
+        <div class="gaps-list">${gapsHTML}</div>
+      </div>
+      ` : ''}
+
+      <div class="result-cta">
+        <div>
+          <h3 class="result-cta-title">Discuss your<br>plan with our<br><em>principal.</em></h3>
+        </div>
+        <div>
+          <p class="result-cta-text">This assessment gives you a clear picture of where you stand. The next step is a private, no-obligation consultation — where we walk through your specific circumstances and build a plan tailored to your estate.</p>
+          <form class="result-cta-form" onsubmit="return false;">
+            <input class="result-input" type="text" placeholder="Your Full Name" />
+            <input class="result-input" type="email" placeholder="Email Address" />
+            <input class="result-input" type="tel" placeholder="Mobile Number" />
+            <button class="result-submit" type="submit">Request a Private Consultation</button>
+          </form>
+          <button class="result-restart" onclick="restartQuiz()">Retake assessment</button>
+        </div>
+      </div>
+
+      <footer class="quiz-footer">
+        <a href="/">
+          <img src="../assets/images/logo.png" alt="Legacy Leaders" class="quiz-footer-logo-img" />
+          <span class="quiz-footer-wordmark">Legacy <span>Leaders</span></span>
+        </a>
+        <span class="quiz-footer-copy">© 2025 Legacy Leaders. All rights reserved. This assessment does not constitute legal or financial advice.</span>
+      </footer>
+    `;
+
+    const rs = document.getElementById('resultScreen');
+    rs.classList.add('active', 'screen-enter');
+    setTimeout(() => rs.classList.remove('screen-enter'), 450);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function restartQuiz() {
+    Object.keys(answers).forEach(k => delete answers[k]);
+    currentQ = 0;
+    document.getElementById('resultScreen').classList.remove('active');
+    document.getElementById('resultScreen').innerHTML = '';
+    document.getElementById('progressFill').style.width = '0%';
+    document.getElementById('startScreen').style.display = 'grid';
+    window.scrollTo({ top: 0 });
+  }
+  </script>
+</body>
+</html>
